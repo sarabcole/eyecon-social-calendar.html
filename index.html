@@ -371,9 +371,9 @@ MARKET RULES:
 async function callClaude(messages, maxTokens=8000) {
   const key = document.getElementById('apiKey').value.trim();
   if (!key) { alert('Please enter your Anthropic API key.'); return null; }
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://anthropic-proxy.sara-eb4.workers.dev/', {
     method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-calls':'true'},
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system:BRAND_SYSTEM,messages})
   });
   if (!res.ok) { const e=await res.json(); throw new Error(e.error?.message||'API error'); }
